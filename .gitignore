@@ -1,0 +1,15 @@
+﻿################################################################################
+# Ce fichier .gitignore a été automatiquement créé par Microsoft(R) Visual Studio.
+################################################################################
+
+/Kata.API/bin/Debug/net8.0
+/.vs
+/Kata.API/obj
+/Kata.Application/bin/Debug/net8.0
+/Kata.Application/obj
+/Kata.Domain/bin/Debug/net8.0
+/Kata.Domain/obj
+/Kata.Infrastructure/bin/Debug/net8.0
+/Kata.Infrastructure/obj
+/Kata.Tests/bin/Debug/net8.0
+/Kata.Tests/obj
