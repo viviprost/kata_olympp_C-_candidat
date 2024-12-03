@@ -1,6 +1,7 @@
 ﻿using Kata.Domain.Entities;
 using Kata.Domain.Repositories;
 using Kata.Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace Kata.Infrastructure.Repositories
 {
@@ -13,34 +14,92 @@ namespace Kata.Infrastructure.Repositories
             _context = context;
         }
 
-        public Task<Clan?> GetArmyByNameClanAsync(string name)
+        public async Task<Clan?> GetArmyByNameClanAsync(string name)
         {
-            throw new NotImplementedException();
+            return await _context.Clans
+                .Include(x => x.Armies)
+                .Where(x => x.Armies.Any(x => x.Name == name))
+                .FirstOrDefaultAsync();
         }
 
-        public Task<Clan?> GetClanByNameAsync(string name)
+        public async Task<Clan?> GetClanByNameAsync(string name)
         {
-            throw new NotImplementedException();
+            return await _context.Clans
+                .AsNoTracking()
+                .Include(x => x.Armies)
+                .ThenInclude(x => x.Soldiers)
+                .FirstOrDefaultAsync(x => x.Name == name);
         }
 
-        public Task AddArmyAsync(string nameClan, Army army)
+        public async Task AddArmyAsync(string name, Army army)
         {
-            throw new NotImplementedException();
+            var clan = await _context.Clans
+                .Include(x => x.Armies)
+                .ThenInclude(x => x.Soldiers)
+                .FirstOrDefaultAsync(x => x.Name == name);
+
+            ArgumentException.ThrowIfNullOrEmpty(nameof(clan));
+
+            var random = new Random();
+
+            clan.Armies.Add(new Army
+            {
+                Name = $"Test-{Guid.NewGuid()}",
+                Soldiers = GenerateRandomSoldier(random.Next(10)).ToList()
+            });
+
+            _context.SaveChanges();
         }
 
-        public Task UpdateArmyAsync(string nameClan, string armyName, Army army)
+        public async Task UpdateArmyAsync(string nameClan, string armyName, Army army)
         {
-            throw new NotImplementedException();
+            var armyToUpdate = await GetFirstArmyBy(nameClan, armyName);
+
+            ArgumentException.ThrowIfNullOrEmpty(nameof(armyToUpdate));
+
+            armyToUpdate = army;
+
+            await _context.SaveChangesAsync();
         }
 
-        public Task DeleteArmyAsync(string nameClan, string nameArmy)
+        public async Task DeleteArmyAsync(string nameClan, string nameArmy)
         {
-            throw new NotImplementedException();
+            var armyToDelete = await GetFirstArmyBy(nameClan, nameArmy);
+
+            _context.Armies.Remove(armyToDelete);
+
+            await _context.SaveChangesAsync();
         }
 
-        public Task<IEnumerable<Clan>> GetAllClansAsync()
+        public async Task<IEnumerable<Clan>> GetAllClansAsync()
         {
-            throw new NotImplementedException();
+            return await _context.Clans
+                .Include(x => x.Armies)
+                .AsNoTracking()
+                .ToListAsync();
+        }
+
+        /// <summary>
+        /// Get first army filter by name.
+        /// Throw exception if empty
+        /// </summary>
+        /// <param name="nameClan"></param>
+        /// <param name="nameArmy"></param>
+        /// <returns></returns>
+        private async Task<Army> GetFirstArmyBy(string nameClan, string nameArmy)
+        {
+            return await _context.Armies
+                .AsNoTracking()
+                .Include(x => x.Clan)
+                .Where(x => x.Name == nameArmy)
+                .Where(x => x.Clan.Name == nameClan)
+                .FirstAsync();
+        }
+
+        private IEnumerable<Soldier> GenerateRandomSoldier(int numberOfCopies)
+        {
+            for (int i = 0; i < numberOfCopies; i++)
+                yield return Soldier.GenerateRandomSoldier();
         }
     }
 }

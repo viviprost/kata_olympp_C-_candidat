@@ -2,5 +2,6 @@
 {
     public class BattleReport
     {
+        public int Id { get; set; }
     }
 }

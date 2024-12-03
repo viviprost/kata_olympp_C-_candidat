@@ -54,11 +54,23 @@ namespace Kata.API.Controllers
         #region POST
 
         [HttpPost("{nameClan}")]
-        public async Task<IActionResult> Add(string nameClan, [FromBody] Army army)
+        public async Task<IActionResult> Add(string nameClan/*, [FromBody] Army army*/)
         {
             try
             {
-                var result = await _clanService.AddArmyAsync(nameClan, army);
+                //var army = new Army
+                //{
+                //    Name = $"Test-{Guid.NewGuid()}",
+                //    Soldiers = Enumerable.Repeat(
+                //        new Soldier 
+                //        { 
+                //            Life = new Random().Next(10), 
+                //            Defense = new Random().Next(10), 
+                //            Attack = new Random().Next(10)
+                //        }, new Random().Next(10)).ToList()
+                //};
+
+                var result = await _clanService.AddArmyAsync(nameClan, null);
                 return Ok(result);
             }
             catch (KeyNotFoundException ex)

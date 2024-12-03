@@ -18,9 +18,9 @@ namespace Kata.Application.Services
         /// </summary>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public Task<IEnumerable<Clan>> GetAllClansAsync()
+        public async Task<IEnumerable<Clan>> GetAllClansAsync()
         {
-            throw new NotImplementedException();
+            return await _clanRepository.GetAllClansAsync();
         }
 
         /// <summary>
@@ -29,9 +29,9 @@ namespace Kata.Application.Services
         /// <param name="name">Name of the Clan</param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public Task<Clan?> GetClanByNameAsync(string name)
+        public async Task<Clan?> GetClanByNameAsync(string name)
         {
-            throw new NotImplementedException();
+            return await _clanRepository.GetClanByNameAsync(name);
         }
 
         /// <summary>
@@ -41,9 +41,10 @@ namespace Kata.Application.Services
         /// <param name="army">Army to add into the clan</param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public Task<int> AddArmyAsync(string nameClan, Army army)
+        public async Task<int> AddArmyAsync(string nameClan, Army army)
         {
-            throw new NotImplementedException();
+            await _clanRepository.AddArmyAsync(nameClan, army);
+            return 0;
         }
 
         /// <summary>
@@ -53,9 +54,10 @@ namespace Kata.Application.Services
         /// <param name="armyClan">name of the army</param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public Task<int> RemoveArmyAsync(string nameClan, string armyClan)
+        public async Task<int> RemoveArmyAsync(string nameClan, string armyClan)
         {
-            throw new NotImplementedException();
+            await _clanRepository.DeleteArmyAsync(nameClan, armyClan);
+            return 0;
         }
 
         /// <summary>
@@ -66,9 +68,10 @@ namespace Kata.Application.Services
         /// <param name="army">updated army</param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public Task<int> UpdateArmyAsync(string nameClan, string armyClan, Army army)
+        public async Task<int> UpdateArmyAsync(string nameClan, string armyClan, Army army)
         {
-            throw new NotImplementedException();
+            await _clanRepository.UpdateArmyAsync(nameClan, armyClan, army);
+            return 0;
         }
     }
 }
