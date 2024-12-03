@@ -7,10 +7,12 @@ namespace Kata.Infrastructure.Repositories
     public class BattleRepository : IBattleRepository
     {
         private readonly KataDBContext _context;
-        public BattleRepository (KataDBContext context)
+
+        public BattleRepository(KataDBContext context)
         {
             _context = context;
         }
+
         public Task<IEnumerable<BattleReport>> GetAllBattlesReport()
         {
             throw new NotImplementedException();

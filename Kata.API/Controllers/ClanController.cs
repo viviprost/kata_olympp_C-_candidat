@@ -9,11 +9,14 @@ namespace Kata.API.Controllers
     public class ClanController : Controller
     {
         private readonly IClanService _clanService;
+
         public ClanController(IClanService clanService)
         {
             _clanService = clanService;
         }
+
         #region GET
+
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Clan>>> GetAllClans()
         {
@@ -27,6 +30,7 @@ namespace Kata.API.Controllers
                 return StatusCode(500, "Internal server error");
             }
         }
+
         [HttpGet("{name}")]
         public async Task<IActionResult> GetClanByName(string name)
         {
@@ -44,8 +48,11 @@ namespace Kata.API.Controllers
                 return StatusCode(500, "Internal server error");
             }
         }
-        #endregion
+
+        #endregion GET
+
         #region POST
+
         [HttpPost("{nameClan}")]
         public async Task<IActionResult> Add(string nameClan, [FromBody] Army army)
         {
@@ -63,8 +70,11 @@ namespace Kata.API.Controllers
                 return StatusCode(500, "Internal server error");
             }
         }
-        #endregion
+
+        #endregion POST
+
         #region PUT
+
         [HttpPut("{nameClan}/{nameArmy}")]
         public async Task<IActionResult> Update(string nameClan, string nameArmy, [FromBody] Army army)
         {
@@ -81,12 +91,14 @@ namespace Kata.API.Controllers
             {
                 return StatusCode(500, "Internal server error");
             }
-
         }
-        #endregion
+
+        #endregion PUT
+
         #region DELETE
+
         [HttpDelete("{nameClan}/{nameArmy}")]
-        public async Task<IActionResult> DeleteProduct(string nameClan,string nameArmy)
+        public async Task<IActionResult> DeleteProduct(string nameClan, string nameArmy)
         {
             try
             {
@@ -102,7 +114,7 @@ namespace Kata.API.Controllers
                 return StatusCode(500, "Internal server error");
             }
         }
-        #endregion
 
+        #endregion DELETE
     }
 }

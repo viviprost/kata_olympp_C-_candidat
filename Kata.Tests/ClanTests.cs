@@ -5,7 +5,6 @@ namespace Kata.Tests
         [Fact]
         public void Test1()
         {
-
         }
     }
 }

@@ -1,11 +1,6 @@
 ﻿using Kata.Domain.Entities;
 using Kata.Domain.Interfaces;
 using Kata.Domain.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Kata.Application.Services
 {
@@ -13,10 +8,11 @@ namespace Kata.Application.Services
     {
         private readonly IClanRepository _clanRepository;
 
-        public ClanService (IClanRepository clanRepository)
+        public ClanService(IClanRepository clanRepository)
         {
-            _clanRepository=clanRepository;
+            _clanRepository = clanRepository;
         }
+
         /// <summary>
         /// List all Clan and their armies
         /// </summary>
@@ -26,6 +22,7 @@ namespace Kata.Application.Services
         {
             throw new NotImplementedException();
         }
+
         /// <summary>
         /// Get the details of a clan
         /// </summary>
@@ -36,8 +33,9 @@ namespace Kata.Application.Services
         {
             throw new NotImplementedException();
         }
+
         /// <summary>
-        /// Add an army to an existing Clan 
+        /// Add an army to an existing Clan
         /// </summary>
         /// <param name="nameClan">Name of the clan</param>
         /// <param name="army">Army to add into the clan</param>
@@ -47,7 +45,7 @@ namespace Kata.Application.Services
         {
             throw new NotImplementedException();
         }
-       
+
         /// <summary>
         /// Remove an army from a clan
         /// </summary>
@@ -59,6 +57,7 @@ namespace Kata.Application.Services
         {
             throw new NotImplementedException();
         }
+
         /// <summary>
         /// Update an army from a clan
         /// </summary>
